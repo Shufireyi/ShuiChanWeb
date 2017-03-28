@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ShuiChanWeb:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ShuiChanWeb.war">
+      <element id="artifact" artifact-name="ShuiChanWeb:war exploded" />
+    </root>
+  </artifact>
+</component>

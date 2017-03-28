@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fire.mapper.AdmMapper">
+
+    <!--<resultMap id="BaseResultMap1" type="com.fire.po.TAdm">-->
+        <!--<id column="a_id" jdbcType="INTEGER" property="aId"/>-->
+        <!--<result column="a_name" jdbcType="VARCHAR" property="aName"/>-->
+        <!--<result column="a_passwd" jdbcType="VARCHAR" property="aPasswd"/>-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="BaseResultMap2" type="com.fire.po.TUser">-->
+        <!--<id column="u_id" jdbcType="INTEGER" property="uId"/>-->
+        <!--<result column="u_name" jdbcType="VARCHAR" property="uName"/>-->
+        <!--<result column="u_passwd" jdbcType="VARCHAR" property="uPasswd"/>-->
+        <!--<result column="u_rname" jdbcType="VARCHAR" property="uRname"/>-->
+        <!--<result column="u_phone" jdbcType="VARCHAR" property="uPhone"/>-->
+        <!--<result column="u_mail" jdbcType="VARCHAR" property="uMail"/>-->
+        <!--<result column="u_ltime" jdbcType="DATE" property="uLtime"/>-->
+        <!--<result column="u_number" jdbcType="INTEGER" property="uNumber"/>-->
+    <!--</resultMap>-->
+
+
+    <!--<resultMap id="BaseResultMap3" type="com.fire.po.TPort">-->
+        <!--<id column="p_id" jdbcType="INTEGER" property="pId"/>-->
+        <!--<result column="p_name" jdbcType="VARCHAR" property="pName"/>-->
+        <!--<result column="p_lutitude" jdbcType="VARCHAR" property="pLutitude"/>-->
+        <!--<result column="p_pro" jdbcType="VARCHAR" property="pPro"/>-->
+        <!--<result column="p_city" jdbcType="VARCHAR" property="pCity"/>-->
+        <!--<result column="p_detail" jdbcType="VARCHAR" property="pDetail"/>-->
+        <!--<result column="p_length" jdbcType="DOUBLE" property="pLength"/>-->
+        <!--<result column="p_width" jdbcType="DOUBLE" property="pWidth"/>-->
+        <!--<result column="p_area" jdbcType="DOUBLE" property="pArea"/>-->
+        <!--<result column="p_deepth" jdbcType="DOUBLE" property="pDeepth"/>-->
+        <!--<result column="p_video" jdbcType="VARCHAR" property="pVideo"/>-->
+        <!--<result column="p_time" jdbcType="TIMESTAMP" property="pTime"/>-->
+        <!--<result column="u_id" jdbcType="INTEGER" property="uId"/>-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="BaseResultMap4" type="com.fire.po.PortVo">-->
+        <!--<id column="p_id" jdbcType="INTEGER" property="tPort.pId"/>-->
+        <!--<result column="p_name" jdbcType="VARCHAR" property="tPort.pName"/>-->
+        <!--<result column="p_lutitude" jdbcType="VARCHAR" property="tPort.pLutitude"/>-->
+        <!--<result column="p_pro" jdbcType="VARCHAR" property="tPort.pPro"/>-->
+        <!--<result column="p_city" jdbcType="VARCHAR" property="tPort.pCity"/>-->
+        <!--<result column="p_detail" jdbcType="VARCHAR" property="tPort.pDetail"/>-->
+        <!--<result column="p_length" jdbcType="DOUBLE" property="tPort.pLength"/>-->
+        <!--<result column="p_width" jdbcType="DOUBLE" property="tPort.pWidth"/>-->
+        <!--<result column="p_area" jdbcType="DOUBLE" property="tPort.pArea"/>-->
+        <!--<result column="p_deepth" jdbcType="DOUBLE" property="tPort.pDeepth"/>-->
+        <!--<result column="p_video" jdbcType="VARCHAR" property="tPort.pVideo"/>-->
+        <!--<result column="p_time" jdbcType="TIMESTAMP" property="tPort.pTime"/>-->
+        <!--<result column="u_id" jdbcType="INTEGER" property="tPort.uId"/>-->
+        <!--<result column="u_name" jdbcType="VARCHAR" property="uName"/>-->
+    <!--</resultMap>-->
+
+    <!--<select id="findAdmByNameAndPasswd" parameterType="com.fire.po.TAdm"-->
+            <!--resultMap="BaseResultMap1">-->
+        <!--SELECT * FROM t_adm WHERE a_name = #{aName} AND a_passwd =-->
+        <!--#{aPasswd};-->
+    <!--</select>-->
+    <!--<select id="findUserByRname" parameterType="string" resultMap="BaseResultMap2">-->
+        <!--SELECT * from t_user WHERE t_user.u_rname LIKE '%${value}%';-->
+    <!--</select>-->
+
+    <!--<select id="findUserByUname" parameterType="string" resultMap="BaseResultMap2">-->
+        <!--SELECT * from t_user WHERE t_user.u_name = #{uName};-->
+    <!--</select>-->
+
+    <!--<select id="findPortListByName" parameterType="string" resultMap="BaseResultMap3">-->
+        <!--SELECT * from t_port WHERE t_port.p_name LIKE '%${value}%';-->
+    <!--</select>-->
+
+    <!--<select id="findPortAndUnameList" parameterType="String" resultMap="BaseResultMap4">-->
+        <!--SELECT p.*,u.u_name from t_port p,t_user u WHERE p.p_name LIKE '%${value}%' and p.u_id=u.u_id;-->
+    <!--</select>-->
+
+    <!--<select id="queryAdmByPage" parameterType="java.util.Map" resultMap="BaseResultMap1">-->
+        <!--select * from t_adm order by a_id;-->
+    <!--</select>-->
+
+    <select id="queryHistoryDataByPage" parameterType="java.util.Map" resultType="com.fire.po.ShuichanData">
+        SELECT * FROM ShuichanData
+        <where>
+            <if test="util.comid != null">
+                and companyid = ${util.comid}
+            </if>
+            <if test="util.facid != null">
+                and factoryid = ${util.facid}
+            </if>
+            <if test="util.type != null and !&quot;&quot;.equals(util.type.trim())">
+                and type LIKE '%${util.type}%'
+            </if>
+            <if test="util.startDate != null and !&quot;&quot;.equals(util.startDate.trim())
+                and util.endDate != null and !&quot;&quot;.equals(util.endDate.trim())
+                and util.startTime != null and !&quot;&quot;.equals(util.startTime.trim())
+                and util.endTime != null and !&quot;&quot;.equals(util.endTime.trim())">
+                and time BETWEEN '${util.startDate} ${util.startTime}' AND '${util.endDate} ${util.endTime}'
+            </if>
+        </where>
+        order by id
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
